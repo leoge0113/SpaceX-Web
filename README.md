@@ -3,5 +3,5 @@
 - web服务性能提升：tomcat集群与页面分离；
 - 拆分为分布式架构
 
-![image](https://github.com/leoge0113/elegant_ssm/tree/master/image/ElegantSSM.jpg)
+![image](https://github.com/leoge0113/elegant_ssm/blob/master/image/ElegantSSM.jpg)
 
