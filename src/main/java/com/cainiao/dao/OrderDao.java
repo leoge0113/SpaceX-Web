@@ -1,6 +1,6 @@
-package com.yingjun.ssm.dao;
+package com.cainiao.dao;
 
-import com.yingjun.ssm.entity.Order;
+import com.cainiao.entity.Order;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface OrderDao {
      * @param goodsId
      * @return
      */
-    int insertOrder(@Param("userId") long userId,@Param("goodsId") long goodsId, @Param("title")String title);
+    int insertOrder(@Param("userId") long userId, @Param("goodsId") long goodsId, @Param("title") String title);
 
     /**
      * 根据用户手机号查询订单

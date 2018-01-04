@@ -1,4 +1,4 @@
-package com.yingjun.ssm.validator;
+package com.cainiao.validator;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

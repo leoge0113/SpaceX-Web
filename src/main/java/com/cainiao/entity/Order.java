@@ -1,4 +1,4 @@
-package com.yingjun.ssm.entity;
+package com.cainiao.entity;
 
 import java.util.Date;
 

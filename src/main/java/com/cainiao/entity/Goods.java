@@ -1,9 +1,9 @@
-package com.yingjun.ssm.entity;
+package com.cainiao.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.yingjun.ssm.util.CustomDateSerializer;
-import com.yingjun.ssm.validator.Not999;
+import com.cainiao.util.CustomDateSerializer;
+import com.cainiao.validator.Not999;
 
 import javax.validation.constraints.Min;
 import java.util.Date;

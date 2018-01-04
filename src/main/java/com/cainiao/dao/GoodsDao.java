@@ -1,6 +1,6 @@
-package com.yingjun.ssm.dao;
+package com.cainiao.dao;
 
-import com.yingjun.ssm.entity.Goods;
+import com.cainiao.entity.Goods;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

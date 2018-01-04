@@ -1,10 +1,9 @@
-package com.yingjun.ssm.dao;
+package com.cainiao.dao;
 
-import java.util.List;
-
+import com.cainiao.entity.User;
 import org.apache.ibatis.annotations.Param;
 
-import com.yingjun.ssm.entity.User;
+import java.util.List;
 
 public interface UserDao {
 
@@ -30,6 +29,6 @@ public interface UserDao {
     /**
      * 增加积分
      */
-    void addScore(@Param("add")int add);
+    void addScore(@Param("add") int add);
 	
 }
