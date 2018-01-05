@@ -10,108 +10,86 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * 序列话工具
- */
 public class ProtoStuffSerializerUtil {
+    static {
+        //https://github.com/protostuff/protostuff/issues/132
+        //禁止反序列化时构造方法被调用
+        System.getProperties().setProperty("protostuff.runtime.always_use_sun_reflection_factory","true");
+    }
+    public static <T> byte[] serializer(T object) {
+        if (object == null) {
+            throw new RuntimeException("Serialize object(" + object + ")failed!");//object == null, will it work well?
+        }
+        //获取schema
+        Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(object.getClass());
+        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
+        byte[] protostuff = null;
+        try {
+            protostuff = ProtostuffIOUtil.toByteArray(object, schema, buffer);
+        } catch (Exception e) {
+            throw new RuntimeException("serialize object(" + object + ")failed!");
+        } finally {
+            buffer.clear();
+        }
+        return protostuff;
+    }
 
-	/**
-	 * 序列化对象
-	 * @param obj
-	 * @return
-	 */
-	public static <T> byte[] serialize(T obj) {
-		if (obj == null) {
-			throw new RuntimeException("序列化对象(" + obj + ")!");
-		}
-		@SuppressWarnings("unchecked")
-		Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(obj.getClass());
-		LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
-		byte[] protostuff = null;
-		try {
-			protostuff = ProtostuffIOUtil.toByteArray(obj, schema, buffer);
-		} catch (Exception e) {
-			throw new RuntimeException("序列化(" + obj.getClass() + ")对象(" + obj + ")发生异常!", e);
-		} finally {
-			buffer.clear();
-		}
-		return protostuff;
-	}
 
-	/**
-	 * 反序列化对象
-	 * @param paramArrayOfByte
-	 * @param targetClass
-	 * @return
-	 */
-	public static <T> T deserialize(byte[] paramArrayOfByte, Class<T> targetClass) {
-		if (paramArrayOfByte == null || paramArrayOfByte.length == 0) {
-			throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
-		}
-		T instance = null;
-		try {
-			instance = targetClass.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			throw new RuntimeException("反序列化过程中依据类型创建对象失败!", e);
-		}
-		Schema<T> schema = RuntimeSchema.getSchema(targetClass);
-		ProtostuffIOUtil.mergeFrom(paramArrayOfByte, instance, schema);
-		return instance;
-	}
+    public static <T> T deserializer(byte[] arrayOfByte, Class<T> targetClass) {
+        if (arrayOfByte == null || arrayOfByte.length == 0 || targetClass == null) {//需要判断targetClass吗？
+            throw new RuntimeException("Deserialize failed!");
+        }
+        T instance = null;
+        try {
+            instance = targetClass.newInstance();//ruguo
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException("Deserialize failed!", e);
+        }
+        Schema schema = RuntimeSchema.getSchema(targetClass);
+        ProtostuffIOUtil.mergeFrom(arrayOfByte, instance, schema);
+        return instance;
+    }
 
-	/**
-	 * 序列化列表
-	 * @param objList
-	 * @return
-	 */
-	public static <T> byte[] serializeList(List<T> objList) {
-		if (objList == null || objList.isEmpty()) {
-			throw new RuntimeException("序列化对象列表(" + objList + ")参数异常!");
-		}
-		@SuppressWarnings("unchecked")
-		Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(objList.get(0).getClass());
-		LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
-		byte[] protostuff = null;
-		ByteArrayOutputStream bos = null;
-		try {
-			bos = new ByteArrayOutputStream();
-			ProtostuffIOUtil.writeListTo(bos, objList, schema, buffer);
-			protostuff = bos.toByteArray();
-		} catch (Exception e) {
-			throw new RuntimeException("序列化对象列表(" + objList + ")发生异常!", e);
-		} finally {
-			buffer.clear();
-			try {
-				if (bos != null) {
-					bos.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+    //序列化列表
+    public static <T> byte[] listSerializer(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            throw new RuntimeException("List serialize failed!");
+        }
+        Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(list.get(0).getClass());
+        LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
+        byte[] protostuff = null;
+        ByteArrayOutputStream bos = null;
+        try {
+            bos = new ByteArrayOutputStream();
+            ProtostuffIOUtil.writeListTo(bos, list, schema, buffer);
+            protostuff = bos.toByteArray();
+        } catch (Exception e) {
+            throw new RuntimeException("Serialize list object failed!");
+        } finally {
+            buffer.clear();
+            try {
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return protostuff;
+    }
 
-		return protostuff;
-	}
+    public static <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
+        if (paramArrayOfByte == null || paramArrayOfByte.length == 0) {
+            throw new RuntimeException("Deserialize failed, parameter is null!");
+        }
 
-	/**
-	 * 反序列化列表
-	 * @param paramArrayOfByte
-	 * @param targetClass
-	 * @return
-	 */
-	public static <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
-		if (paramArrayOfByte == null || paramArrayOfByte.length == 0) {
-			throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
-		}
-
-		Schema<T> schema = RuntimeSchema.getSchema(targetClass);
-		List<T> result = null;
-		try {
-			result = ProtostuffIOUtil.parseListFrom(new ByteArrayInputStream(paramArrayOfByte), schema);
-		} catch (IOException e) {
-			throw new RuntimeException("反序列化对象列表发生异常!", e);
-		}
-		return result;
-	}
-
+        Schema<T> schema = RuntimeSchema.getSchema(targetClass);
+        List<T> result = null;
+        try {
+            result = ProtostuffIOUtil.parseListFrom(new ByteArrayInputStream(paramArrayOfByte), schema);
+        } catch (IOException e) {
+            throw new RuntimeException("Deserialize failed!", e);
+        }
+        return result;
+    }
 }
