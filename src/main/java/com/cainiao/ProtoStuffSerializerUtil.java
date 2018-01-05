@@ -1,4 +1,4 @@
-package com.cainiao.util;
+package com.cainiao;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;

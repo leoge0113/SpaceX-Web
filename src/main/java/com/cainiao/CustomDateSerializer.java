@@ -1,4 +1,4 @@
-package com.cainiao.util;
+package com.cainiao;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

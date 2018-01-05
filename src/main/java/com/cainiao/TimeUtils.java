@@ -1,4 +1,4 @@
-package com.cainiao.util;
+package com.cainiao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
