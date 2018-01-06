@@ -14,3 +14,16 @@
 
     为了写redis操作的代码。
     函数接口是个泛型接口，lambda怎么写。
+- redis 应用
+
+    添加，
+    删除（模糊/精确），查找，清空等。
+    
+    应用场景：为什么用内存库，什么时候添加，expiretime为什么要，什么时候清空
+- service层里spring数据库事务的应用
+- 自动义runtimeexception使用
+- controler里使用注解@valid对form表单进行校验
+- 自定义注解使用
+- 采用AOP的方式判断验证结果
+- Druid网络统计与监控
+    

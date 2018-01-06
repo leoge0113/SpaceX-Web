@@ -1,6 +1,6 @@
 package com.cainiao.cache;
 
-import com.cainiao.ProtoStuffSerializerUtil;
+import com.cainiao.util.ProtoStuffSerializerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;

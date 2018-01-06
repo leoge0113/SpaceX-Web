@@ -1,8 +1,8 @@
 package com.cainiao.entity;
 
+import com.cainiao.validator.CustomDateSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.cainiao.CustomDateSerializer;
 import com.cainiao.validator.Not999;
 
 import javax.validation.constraints.Min;
@@ -27,7 +27,7 @@ public class Goods {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createTime;
 	
-	@JsonSerialize(using = CustomDateSerializer.class)  
+	@JsonSerialize(using = CustomDateSerializer.class)
 	private Date updateTime;
 	
 	public long getGoodsId() {
