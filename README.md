@@ -28,13 +28,15 @@
 - Druid网络统计与监控
 - 捕获全局错误
 
-实现GlobalExceptionResolver implements HandlerExceptionResolver 
-配置bean：
-<!--全局异常捕捉 -->
-	<bean class="com.cainiao.exception.GlobalExceptionResolver" />
+    实现GlobalExceptionResolver implements HandlerExceptionResolver 
+    配置bean：
+    <!--全局异常捕捉 -->
+        <bean class="com.cainiao.exception.GlobalExceptionResolver" />
 - redis 开启远程登录
-
-redis.conf
-1. \#bind localhost
-2. protected mode no
-3. 重启   
+    
+    redis.conf
+    1. \#bind localhost
+    2. protected mode no
+    3. 重启  
+- spring 定时任务开发
+ 
