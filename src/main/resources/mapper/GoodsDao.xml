@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yingjun.ssm.dao.GoodsDao">
+<mapper namespace="com.cainiao.dao.GoodsDao">
 
 
 	<select id="queryAll" resultType="Goods">
@@ -15,6 +15,7 @@
 		SET 
 		number = number -1
 		WHERE
+
 		goods_id = #{goodsId}
 		AND state = 1
 		AND number >0;

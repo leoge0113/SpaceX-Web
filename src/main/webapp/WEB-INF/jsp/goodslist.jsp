@@ -75,7 +75,7 @@
 
 </body>
 <script src="http://apps.bdimg.com/libs/jquery.cookie/1.4.1/jquery.cookie.js"></script>
-<script src="<%=path%>/resource/script/handler.js" type="text/javascript"></script>
+<script src="<%=path%>/resource/script/handler.js" type="text/javascript"></script><!--%path 为。。。/webapp-->
 <script type="text/javascript">
 $(function () {
 	//初始化业务逻辑script

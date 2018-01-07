@@ -1,7 +1,7 @@
-
+﻿
 -- 需要 MySQL 5.6.5以上的版本
-CREATE DATABASE beauty_ssm;
-USE beauty_ssm;
+CREATE DATABASE elegant_ssm;
+USE elegant_ssm;
 
 -- 用户表
 CREATE TABLE _user(
