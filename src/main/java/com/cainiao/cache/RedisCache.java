@@ -1,5 +1,5 @@
 package com.cainiao.cache;
-
+/*
 import com.cainiao.util.ProtoStuffSerializerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -84,30 +84,16 @@ public class RedisCache {
         }
         return ProtoStuffSerializerUtil.deserializeList(result, targetClass);
     }
-
-    /**
-     * 精确删除key
-     *
-     * @param key
-     */
     public void deleteCache(String key) {
         redisTemplate.delete(key);
     }
 
-    /**
-     * 模糊删除key
-     *
-     * @param pattern
-     */
     public void deleteCacheWithPattern(String pattern) {
         Set<String> keys = redisTemplate.keys(pattern);
         redisTemplate.delete(keys);
     }
-
-    /**
-     * 清空所有缓存
-     */
     public void clearCache() {
         deleteCacheWithPattern(RedisCache.GOODSCACHE + "|*");
     }
 }
+*/

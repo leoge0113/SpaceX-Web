@@ -1,6 +1,7 @@
 package com.cainiao.service.impl;
 
-import com.cainiao.cache.RedisCache;
+//import com.cainiao.cache.RedisCache;
+import com.cainiao.cache.RedisClusterCache;
 import com.cainiao.dao.GoodsDao;
 import com.cainiao.dao.OrderDao;
 import com.cainiao.dao.UserDao;
@@ -31,18 +32,19 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private RedisCache cache;
+    //private RedisCache cache;
+    private RedisClusterCache cache;
 
     @Override
     public List<Goods> getGoodsList(int offset, int limit) {
-        String cache_key = RedisCache.GOODSCACHE + "|getGoodsList|" + offset + "|" + limit;
+        String cache_key = RedisClusterCache.GOODSCACHE + "|getGoodsList|" + offset + "|" + limit;
         List<Goods> result_cache = cache.getListCache(cache_key, Goods.class);
         if (result_cache != null) {
             LOG.info("get cache with key:" + cache_key);
         } else {
             // 缓存中没有再去数据库取，并插入缓存（缓存时间为60秒）
             result_cache = goodsDao.queryAll(offset, limit);
-            cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.EXPIRETIME);
+            cache.putListCacheWithExpireTime(cache_key, result_cache, RedisClusterCache.EXPIRETIME);
             LOG.info("put cache with key:" + cache_key);
             return result_cache;
         }

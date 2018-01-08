@@ -1,6 +1,8 @@
 package com.cainiao.schedual;
 
-import com.cainiao.cache.RedisCache;
+//import com.cainiao.cache.RedisCache;
+import com.cainiao.cache.RedisClusterCache;
+import com.cainiao.cache.RedisClusterCache;
 import com.cainiao.dao.UserDao;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,8 @@ public class BizSche {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private RedisCache redisCache;
+    //private RedisCache redisCache;
+    private RedisClusterCache redisCache;
     @Scheduled(cron = "0 0/1 9-17 * * ? ")
     public void addUserScore() {
         LOG.info("@Scheduled--------addUserScore()");
