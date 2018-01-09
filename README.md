@@ -108,3 +108,4 @@ C-->|Json|A
 #### Nginx 作为静态资源服务器
 #### Nginx作为负载均衡服务器
 ### 前后端分离controller开发
+### Tomcat 配置实现session共享
