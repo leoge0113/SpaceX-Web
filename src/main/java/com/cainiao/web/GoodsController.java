@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/goods")
@@ -31,10 +32,12 @@ public class GoodsController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model, Integer offset, Integer limit) {
         LOG.info("invoke----------/goods/list");
-        LOG.info("offset = ",offset);
-        offset = offset == null ? 0 : offset;//默认便宜0
-        limit = limit == null ? 50 : limit;//默认展示50条
-        List<Goods> list = goodsService.getGoodsList(offset, limit);
+        LOG.info("offset = ", offset);
+        //offset = offset == null ? 0 : offset;//默认便宜0
+        //limit = limit == null ? 50 : limit;//默认展示50条
+        // Optional.ofNullable(offset).map(offset1 -> offset.intValue()).orElse(0);
+        //Optional.ofNullable(limit).map(limit1 -> limit1.intValue()).orElse(50);
+        List<Goods> list = goodsService.getGoodsList(Optional.ofNullable(offset).map(offset1 -> offset1.intValue()).orElse(0), Optional.ofNullable(limit).map(limit1 -> limit1.intValue()).orElse(50));
         model.addAttribute("goodslist", list);
         return "goodslist";
     }
