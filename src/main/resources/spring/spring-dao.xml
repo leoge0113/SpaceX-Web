@@ -26,7 +26,9 @@
         <property name="minIdle" value="${druid.pool.size.min}" />
         <property name="maxActive" value="${druid.pool.size.max}" />
 
-        <!-- 配置监控统计拦截的filters，wall用于防止sql注入，stat用于统计分析 -->
+        <!-- 配置监控统计拦截的filters，wall用于防止sql注入，stat用于统计分析
+        拦截检测注入的时间不在StatFilter统计的SQL执行时间内。
+        如果希望StatFilter统计的SQL执行时间内,则改为stat,wall-->
         <property name="filters" value="wall,stat" />
     </bean>
 
