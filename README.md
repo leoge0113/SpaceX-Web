@@ -4,7 +4,7 @@
 - web服务性能提升：tomcat集群与页面分离；
 - 拆分为分布式架构
 ## maven依赖
-![image](https://github.com/leoge0113/elegant_ssm/blob/master/image/SpaceX-Web.jpg)
+![image](https://github.com/leoge0113/elegant_ssm/blob/master/image/SpaceX_Web.jpg)
 
 ## version1.0 开发点滴
 - 类构造函数特殊性造成该类对象protostuff反序列化问题
