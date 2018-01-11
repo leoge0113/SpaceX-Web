@@ -1,8 +1,8 @@
 ## 最初的梦想
 三步走：
-- 构建高（物理库，内存库）可用ssm web应用；
-- web服务性能提升：tomcat集群与页面分离；
-- 拆分为分布式架构
+- version1.0为高可用（物理库，内存库）ssm web应用；
+- version2.0为web服务性能提升：tomcat集群与页面分离版本；
+- version3.0为分布式架构web系统：实现了分布式锁，队列等。版本与1.0,2.0区别较大，另起一个名为“SpaceX-Web-Distributed”项目。
 ## maven依赖
 ![image](https://github.com/leoge0113/elegant_ssm/blob/master/image/SpaceX_Web.jpg)
 
