@@ -107,5 +107,41 @@ C-->|Json|A
 ### Nginx
 #### Nginx 作为静态资源服务器
 #### Nginx作为负载均衡服务器
+##### Nginx 平滑加权轮询算法
+普通加权轮询算法有个缺陷，就是某些情况下生成的序列是不均匀的。比如针对这样的配置：
+```
+http {    
+    upstream cluster {    
+        server a weight=5;    
+        server b weight=1;    
+        server c weight=1;    
+    }    
+    ...  
+}   
+```
+生成的序列是这样的：{a,a, a, a, a, c, b}。会有5个连续的请求落在后端a上，分布不太均匀。
+ 
+　　在Nginx源码中，实现了一种叫做平滑的加权轮询（smooth weighted round-robin balancing）的算法，它生成的序列更加均匀。比如前面的例子，它生成的序列为{ a, a, b, a, c, a, a}，转发给后端a的5个请求现在分散开来，不再是连续的。
+ 
+　　该算法的原理如下：
+　　每个服务器都有两个权重变量：
+　　a：weight，配置文件中指定的该服务器的权重，这个值是固定不变的；
+　　b：current_weight，服务器目前的权重。一开始为0，之后会动态调整。
+ 
+　　每次当请求到来，选取服务器时，会遍历数组中所有服务器。对于每个服务器，让它的current_weight增加它的weight；同时累加所有服务器的weight，并保存为total。
+　　遍历完所有服务器之后，如果该服务器的current_weight是最大的，就选择这个服务器处理本次请求。最后把该服务器的current_weight减去total。
+ 
+　　上述描述可能不太直观，来看个例子。比如针对这样的配置：
+```
+http {    
+    upstream cluster {    
+        server a weight=4;    
+        server b weight=2;    
+        server c weight=1;    
+    }    
+    ...  
+}   
+```
+按照这个配置，生成的序列是{a,,a,c,a,b,a}.
 ### 前后端分离controller开发
 ### Tomcat 配置实现session共享
